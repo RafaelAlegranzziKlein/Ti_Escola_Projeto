@@ -40,6 +40,24 @@ CREATE TABLE `chamado_tecnico` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+
+-- Criar tabela de Usuários com campos para login [cite: 214, 218]
+CREATE TABLE IF NOT EXISTS `usuarios` (
+`id_usuario` INT NOT NULL AUTO_INCREMENT,
+`nome` VARCHAR(100) NOT NULL,
+`email` VARCHAR(100) NOT NULL UNIQUE,
+`senha` VARCHAR(255) NOT NULL,
+PRIMARY KEY (`id_usuario`)
+) ENGINE=InnoDB;
+-- Criar tabela de Equipamentos [cite: 232, 244]
+CREATE TABLE IF NOT EXISTS `equipamentos` (
+`id_equipamento` INT NOT NULL AUTO_INCREMENT,
+`tag_patrimonio` VARCHAR(50) NOT NULL UNIQUE,
+`sala` VARCHAR(50),
+PRIMARY KEY (`id_equipamento`)
+) ENGINE=InnoDB;
+
+
 -- Índices para tabelas despejadas
 --
 
@@ -50,6 +68,30 @@ ALTER TABLE `chamado_tecnico`
   ADD PRIMARY KEY (`id`);
 
 --
+-- 1. Converter o motor da tabela para InnoDB (obrigatório para FKs) [cite: 13, 188]
+ALTER TABLE `chamado_tecnico` ENGINE=InnoDB;
+
+-- 2. Adicionar as colunas de ID para os relacionamentos [cite: 261, 294]
+ALTER TABLE `chamado_tecnico`
+ADD COLUMN `id_usuario` INT NULL AFTER `id`,
+ADD COLUMN `id_equipamento` INT NULL AFTER `id_usuario`;
+
+-- 3. REMOÇÃO DOS CAMPOS REDUNDANTES (A peça que faltava!)
+-- Removemos solicitante e equipamento_tag porque agora usamos IDs[cite: 10, 202].
+-- Removemos sala porque ela agora pertence à entidade Equipamento.
+
+ALTER TABLE `chamado_tecnico`
+DROP COLUMN `solicitante`,
+DROP COLUMN `equipamento_tag`,
+DROP COLUMN `sala`;
+
+-- 4. Aplicar as Chaves Estrangeiras (Foreign Keys) [cite: 241, 253, 295]
+ALTER TABLE `chamado_tecnico`
+ADD CONSTRAINT `fk_usuario_chamado`
+FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
+ADD CONSTRAINT `fk_equipamento_chamado`
+FOREIGN KEY (`id_equipamento`) REFERENCES `equipamentos`
+(`id_equipamento`);
 -- AUTO_INCREMENT para tabelas despejadas
 --
 
