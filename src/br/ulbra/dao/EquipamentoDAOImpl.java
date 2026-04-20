@@ -18,8 +18,8 @@ public class EquipamentoDAOImpl implements EquipamentoDAO {
         try (Connection conn = ConnectionFactory.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, equipamento.getSala());
-            stmt.setString(2, equipamento.getTag_patrimonio());
+            stmt.setString(1, equipamento.getTag_patrimonio());
+            stmt.setString(2, equipamento.getSala());
 
             stmt.executeUpdate();
 
@@ -81,7 +81,7 @@ public class EquipamentoDAOImpl implements EquipamentoDAO {
 
     @Override
     public void atualizar(Equipamento equipamentos) {
-        String sql = "UPDATE equipamentos SET  WHERE id_equipamento = ?";
+        String sql = "UPDATE equipamentos SET tag_patrimonio = ?, sala = ? WHERE id_equipamento = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -89,7 +89,6 @@ public class EquipamentoDAOImpl implements EquipamentoDAO {
             stmt.setString(1, equipamentos.getTag_patrimonio());
             stmt.setString(2, equipamentos.getSala());
             stmt.setInt(3, equipamentos.getId_equipamento());
-            
 
             stmt.executeUpdate();
 
@@ -111,5 +110,26 @@ public class EquipamentoDAOImpl implements EquipamentoDAO {
         } catch (Exception c) {
             throw new RuntimeException(c);
         }
+    }
+
+    @Override
+    public boolean existeTag(String tag) {
+        String sql = "SELECT COUNT(*) FROM equipamentos WHERE tag_patrimonio = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, tag);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return false;
     }
 }

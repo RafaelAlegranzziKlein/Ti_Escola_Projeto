@@ -9,7 +9,6 @@ package br.ulbra.dao;
  *
  * @author Rafael Alegranzzi Klein
  */
-
 import br.ulbra.model.Equipamento;
 import java.util.List;
 
@@ -24,4 +23,6 @@ public interface EquipamentoDAO {
     void atualizar(Equipamento equipamento);
 
     void deletar(int id_equipamento);
+
+    boolean existeTag(String tag);
 }
