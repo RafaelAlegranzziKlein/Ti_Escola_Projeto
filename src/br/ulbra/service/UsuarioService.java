@@ -18,43 +18,44 @@ public class UsuarioService {
 
     public void cadastrar(Usuario usuario) {
 
-        if (usuario.getNome() == null || !usuario.getNome().isEmpty()) {
+        if (usuario.getNome() == null || usuario.getNome().isEmpty()) {
             throw new RuntimeException("Nome é obrigatorio ou voce é indigente");
         }
-        if (usuario.getEmail() == null || !usuario.getEmail().isEmpty()) {
+        if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
             throw new RuntimeException("Email é obrigatorio !!!");
         }
-        if (usuario.getSenha() == null || !usuario.getSenha().isEmpty()) {
+        if (usuario.getSenha() == null || usuario.getSenha().isEmpty()) {
             throw new RuntimeException("Senha é obrigatoria !!!");
         }
         if (!usuario.getEmail().contains("@")) {
             throw new RuntimeException("O '@' é obrigatorio");
         }
-        dao.salvar (usuario);
+        dao.salvar(usuario);
     }
-public List<Usuario> listar() {
+
+    public List<Usuario> listar() {
         return dao.listar();
     }
 
     public void atualizar(Usuario usuario) {
 
-        if (usuario.getId_usuario() <= 0 ) {
+        if (usuario.getId_usuario() <= 0) {
             throw new RuntimeException("ID obrigatório para atualizar");
         }
 
-        if (usuario.getNome()== null || usuario.getNome().isEmpty()) {
+        if (usuario.getNome() == null || usuario.getNome().isEmpty()) {
             throw new RuntimeException("Solicitante é obrigatório");
         }
-          if (usuario.getEmail() == null || !usuario.getEmail().isEmpty()) {
+        if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
             throw new RuntimeException("Email é obrigatorio !!!");
         }
-        if (usuario.getSenha() == null || !usuario.getSenha().isEmpty()) {
+        if (usuario.getSenha() == null || usuario.getSenha().isEmpty()) {
             throw new RuntimeException("Senha é obrigatoria !!!");
         }
         if (!usuario.getEmail().contains("@")) {
             throw new RuntimeException("O '@' é obrigatorio");
         }
-        
+
         dao.atualizar(usuario);
     }
 
@@ -65,5 +66,5 @@ public List<Usuario> listar() {
     public Usuario buscar(int id_usuario) {
         return dao.buscarPorId(id_usuario);
     }
-    
+
 }

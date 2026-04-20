@@ -31,7 +31,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public List<Usuario> listar() {
-        String sql = "SELECT * FROM usuario";
+        String sql = "SELECT * FROM usuarios";
         List<Usuario> lista = new ArrayList<>();
 
         try (Connection conn = ConnectionFactory.getConnection();
@@ -58,7 +58,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public Usuario buscarPorId(int id_usuario) {
-        String sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+        String sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -81,9 +81,10 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
         return null;
     }
+
     @Override
     public void atualizar(Usuario usuario) {
-        String sql = "UPDATE usuario SET  WHERE id_usuario = ?";
+        String sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ? WHERE id_usuario = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -92,7 +93,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             stmt.setString(2, usuario.getEmail());
             stmt.setString(3, usuario.getSenha());
             stmt.setInt(4, usuario.getId_usuario());
-       
 
             stmt.executeUpdate();
 
@@ -103,7 +103,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public void deletar(int id_usuario) {
-        String sql = "DELETE FROM usuario WHERE id_usuario = ?";
+        String sql = "DELETE FROM usuarios WHERE id_usuario = ?";
 
         try (Connection conn = ConnectionFactory.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -116,4 +116,3 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         }
     }
 }
-
