@@ -65,4 +65,5 @@ public class EquipamentoService {
         return dao.buscarPorId(id_equipamento);
     }
     
+    
 }
