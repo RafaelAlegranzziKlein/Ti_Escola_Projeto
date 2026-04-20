@@ -13,7 +13,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public void salvar(Usuario usuario) {
-        String sql = "INSERT INTO chamado_tecnico (nome, email, senha) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
 
         try (Connection conn = ConnectionFactory.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
