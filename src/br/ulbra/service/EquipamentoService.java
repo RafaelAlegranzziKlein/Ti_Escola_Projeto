@@ -49,7 +49,7 @@ public class EquipamentoService {
         if (equipamento.getTag_patrimonio() == null || equipamento.getTag_patrimonio().isEmpty()) {
             throw new RuntimeException("Tag de patrimonio é obrigatório");
         }
-        if (equipamento.getSala() == null || !equipamento.getSala().isEmpty()) {
+        if (equipamento.getSala() == null || equipamento.getSala().isEmpty()) {
             throw new RuntimeException("Sala é obrigatorio !!!");
         }
 
