@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -28,7 +29,7 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
         carregarComboUsuario();
     }
 
-    public void carregarComboUsuarios() {
+    public void carregarComboUsuario() {
         String sql = "Select nome From usuarios ORDER BY nome";
         try (Connection con = ConnectionFactory.getConnection();
                 PreparedStatement pst = con.prepareStatement(sql);
@@ -58,9 +59,9 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
         cbUsuarios = new javax.swing.JComboBox<>();
         btnBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        tblUsuarios = new javax.swing.JPanel();
+        teste = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblUsuarios = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,10 +113,10 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         jLabel2.setText("Filtro de busca");
 
-        tblUsuarios.setBackground(new java.awt.Color(153, 153, 153));
-        tblUsuarios.setForeground(new java.awt.Color(153, 153, 153));
+        teste.setBackground(new java.awt.Color(153, 153, 153));
+        teste.setForeground(new java.awt.Color(153, 153, 153));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -126,20 +127,20 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
                 "ID", "Nome", "Email", "Senha"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblUsuarios);
 
-        javax.swing.GroupLayout tblUsuariosLayout = new javax.swing.GroupLayout(tblUsuarios);
-        tblUsuarios.setLayout(tblUsuariosLayout);
-        tblUsuariosLayout.setHorizontalGroup(
-            tblUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tblUsuariosLayout.createSequentialGroup()
+        javax.swing.GroupLayout testeLayout = new javax.swing.GroupLayout(teste);
+        teste.setLayout(testeLayout);
+        testeLayout.setHorizontalGroup(
+            testeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(testeLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
         );
-        tblUsuariosLayout.setVerticalGroup(
-            tblUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tblUsuariosLayout.createSequentialGroup()
+        testeLayout.setVerticalGroup(
+            testeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, testeLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -150,14 +151,15 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tblUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(teste, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -168,7 +170,7 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
                 .addGap(50, 50, 50)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(tblUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(teste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
         );
 
@@ -192,21 +194,36 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String busca = cbUsuarios.getEditor().getItem().toString().trim();
-        DefaultTablemodel modelo = (DefaultTableModel) tblUsuarios.getModel();
-        modelo.setNumRows(o);
+        DefaultTableModel modelo = (DefaultTableModel) tblUsuarios.getModel();
+        modelo.setNumRows(0);
         String sql;
         if (busca.equals("todos") || busca.isEmpty()) {
             sql = "SELECT * FROM usuarios";
         } else {
             sql = "SELECT * FROM usuarios WHERE nome LIKE ?";
         }
-        try (connection con = ConnectionFactory.getConnect)
+        try (Connection con = ConnectionFactory.getConnection();
+                PreparedStatement pst = con.prepareStatement(sql)) {
+            if (!busca.equals("Todos") && !busca.isEmpty()) {
+                pst.setString(1, "%" + busca + "%");
+            }
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                modelo.addRow(new Object[]{
+                    rs.getInt("id_usuario"),
+                    rs.getString("nome"),
+                    rs.getString("email")});
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "ERRO: " + e.getMessage());
+        }
+    
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+/**
+ * @param args the command line arguments
+ */
+public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -217,16 +234,52 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
+                
+
+
+
+
+
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConsutaUsuarioview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConsutaUsuarioview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConsutaUsuarioview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConsutaUsuarioview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConsutaUsuarioview.class
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+
+
+
+
+} catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ConsutaUsuarioview.class
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+
+
+
+
+} catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ConsutaUsuarioview.class
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+
+
+
+
+} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ConsutaUsuarioview.class
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -246,7 +299,7 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JPanel tblUsuarios;
+    private javax.swing.JTable tblUsuarios;
+    private javax.swing.JPanel teste;
     // End of variables declaration//GEN-END:variables
 }
