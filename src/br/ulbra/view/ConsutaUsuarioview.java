@@ -35,7 +35,7 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
                 PreparedStatement pst = con.prepareStatement(sql);
                 ResultSet rs = pst.executeQuery()) {
             cbUsuarios.removeAllItems();
-            cbUsuarios.addItem("todos");
+            cbUsuarios.addItem("Todos");
             while (rs.next()) {
                 cbUsuarios.addItem(rs.getString("nome"));
             }
@@ -141,8 +141,8 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
         testeLayout.setVerticalGroup(
             testeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, testeLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -169,7 +169,7 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(50, 50, 50)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(teste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
         );
@@ -197,7 +197,7 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) tblUsuarios.getModel();
         modelo.setNumRows(0);
         String sql;
-        if (busca.equals("todos") || busca.isEmpty()) {
+        if (busca.equals("Todos") || busca.isEmpty()) {
             sql = "SELECT * FROM usuarios";
         } else {
             sql = "SELECT * FROM usuarios WHERE nome LIKE ?";
@@ -212,7 +212,8 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
                 modelo.addRow(new Object[]{
                     rs.getInt("id_usuario"),
                     rs.getString("nome"),
-                    rs.getString("email")});
+                    rs.getString("email"),
+                    rs.getString("senha")});
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "ERRO: " + e.getMessage());

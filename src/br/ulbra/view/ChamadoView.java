@@ -15,6 +15,8 @@ public class ChamadoView extends javax.swing.JFrame {
     public ChamadoView() {
         initComponents();
         listarTabela();
+        this.setLocationRelativeTo(null);
+
     }
 
     public void listarTabela() {

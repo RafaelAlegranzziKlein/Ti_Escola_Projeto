@@ -20,6 +20,8 @@ public class UsuarioView extends javax.swing.JFrame {
     public UsuarioView() {
         initComponents();
         listarTabela();
+        this.setLocationRelativeTo(null);
+
     }
 
     public void listarTabela() {

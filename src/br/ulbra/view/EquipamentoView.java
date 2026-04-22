@@ -20,6 +20,8 @@ public class EquipamentoView extends javax.swing.JFrame {
     public EquipamentoView() {
         initComponents();
         listarTabela();
+        this.setLocationRelativeTo(null);
+
     }
 
     public void listarTabela() {
