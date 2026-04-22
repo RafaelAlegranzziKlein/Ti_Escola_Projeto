@@ -6,7 +6,6 @@
 package br.ulbra.view;
 
 import br.ulbra.dao.ConnectionFactory;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,26 +17,26 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author aluno.saolucas
  */
-public class ConsutaUsuarioview extends javax.swing.JFrame {
+public class ConsultaEquipamento extends javax.swing.JFrame {
 
     /**
-     * Creates new form ConsutaUsuarioview
+     * Creates new form ConsultaEquipamento
      */
-    public ConsutaUsuarioview() {
+    public ConsultaEquipamento() {
         initComponents();
         this.setLocationRelativeTo(null);
         carregarComboUsuario();
     }
 
     public void carregarComboUsuario() {
-        String sql = "Select nome From usuarios ORDER BY nome";
+        String sql = "Select tag_patrimonio From equipamentos ORDER BY tag_patrimonio";
         try (Connection con = ConnectionFactory.getConnection();
                 PreparedStatement pst = con.prepareStatement(sql);
                 ResultSet rs = pst.executeQuery()) {
-            cbUsuarios.removeAllItems();
-            cbUsuarios.addItem("Todos");
+            cbEquipamento.removeAllItems();
+            cbEquipamento.addItem("Todos");
             while (rs.next()) {
-                cbUsuarios.addItem(rs.getString("nome"));
+                cbEquipamento.addItem(rs.getString("tag_patrimonio"));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar a lista: " + e.getMessage());
@@ -56,12 +55,12 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        cbUsuarios = new javax.swing.JComboBox<>();
+        cbEquipamento = new javax.swing.JComboBox<>();
         btnBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         teste = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblUsuarios = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbEquipamentos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,14 +71,15 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
         jPanel2.setForeground(new java.awt.Color(153, 153, 153));
 
         jLabel1.setFont(new java.awt.Font("Gadugi", 1, 24)); // NOI18N
-        jLabel1.setText("Selecione ou digite o nome do Usuario");
+        jLabel1.setText("Selecione ou digite a tag do equipamento");
 
-        cbUsuarios.setBackground(new java.awt.Color(99, 89, 133));
-        cbUsuarios.setEditable(true);
-        cbUsuarios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbUsuarios.addActionListener(new java.awt.event.ActionListener() {
+        cbEquipamento.setBackground(new java.awt.Color(99, 89, 133));
+        cbEquipamento.setEditable(true);
+        cbEquipamento.setForeground(new java.awt.Color(99, 89, 133));
+        cbEquipamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbEquipamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbUsuariosActionPerformed(evt);
+                cbEquipamentoActionPerformed(evt);
             }
         });
 
@@ -99,10 +99,10 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbUsuarios, 0, 159, Short.MAX_VALUE)
+                .addComponent(cbEquipamento, 0, 131, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnBuscar)
-                .addGap(18, 18, 18))
+                .addGap(14, 14, 14))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,7 +110,7 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(cbUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
@@ -121,19 +121,19 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
         teste.setBackground(new java.awt.Color(24, 18, 43));
         teste.setForeground(new java.awt.Color(153, 153, 153));
 
-        tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+        tbEquipamentos.setForeground(new java.awt.Color(99, 89, 133));
+        tbEquipamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "ID", "Nome", "Email", "Senha"
+                "ID", "Ta do Patrimonio", "Sala"
             }
         ));
-        tblUsuarios.setToolTipText("");
-        jScrollPane1.setViewportView(tblUsuarios);
+        jScrollPane2.setViewportView(tbEquipamentos);
 
         javax.swing.GroupLayout testeLayout = new javax.swing.GroupLayout(teste);
         teste.setLayout(testeLayout);
@@ -141,14 +141,14 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
             testeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(testeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
         testeLayout.setVerticalGroup(
             testeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, testeLayout.createSequentialGroup()
+            .addGroup(testeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -164,8 +164,8 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(68, 68, 68)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(teste, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(teste, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -175,9 +175,9 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(50, 50, 50)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(teste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -194,19 +194,19 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbUsuariosActionPerformed
+    private void cbEquipamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEquipamentoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbUsuariosActionPerformed
+    }//GEN-LAST:event_cbEquipamentoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        String busca = cbUsuarios.getEditor().getItem().toString().trim();
-        DefaultTableModel modelo = (DefaultTableModel) tblUsuarios.getModel();
+        String busca = cbEquipamento.getEditor().getItem().toString().trim();
+        DefaultTableModel modelo = (DefaultTableModel) tbEquipamentos.getModel();
         modelo.setNumRows(0);
         String sql;
         if (busca.equals("Todos") || busca.isEmpty()) {
-            sql = "SELECT * FROM usuarios";
+            sql = "SELECT * FROM equipamentos";
         } else {
-            sql = "SELECT * FROM usuarios WHERE nome LIKE ?";
+            sql = "SELECT * FROM equipamentos WHERE tag_patrimonio LIKE ?";
         }
         try (Connection con = ConnectionFactory.getConnection();
                 PreparedStatement pst = con.prepareStatement(sql)) {
@@ -216,21 +216,20 @@ public class ConsutaUsuarioview extends javax.swing.JFrame {
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 modelo.addRow(new Object[]{
-                    rs.getInt("id_usuario"),
-                    rs.getString("nome"),
-                    rs.getString("email"),
-                    rs.getString("senha")});
+                    rs.getInt("id_equipamento"),
+                    rs.getString("tag_patrimonio"),
+                    rs.getString("sala")});
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "ERRO: " + e.getMessage());
         }
-    
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-/**
- * @param args the command line arguments
- */
-public static void main(String args[]) {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -241,72 +240,36 @@ public static void main(String args[]) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                
-
-
-
-
-
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConsutaUsuarioview.class
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
-
-
-
-
-
-} catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConsutaUsuarioview.class
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
-
-
-
-
-
-} catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConsutaUsuarioview.class
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
-
-
-
-
-
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConsutaUsuarioview.class
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConsultaEquipamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ConsultaEquipamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ConsultaEquipamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ConsultaEquipamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConsutaUsuarioview().setVisible(true);
+                new ConsultaEquipamento().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JComboBox<String> cbUsuarios;
+    private javax.swing.JComboBox<String> cbEquipamento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblUsuarios;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tbEquipamentos;
     private javax.swing.JPanel teste;
     // End of variables declaration//GEN-END:variables
 }
