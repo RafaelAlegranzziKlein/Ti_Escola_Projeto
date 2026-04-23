@@ -36,6 +36,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             throw new RuntimeException("Erro ao salvar: " + e.getMessage());
         }
     }
+ 
 
     @Override
     public List<Usuario> listar() {
