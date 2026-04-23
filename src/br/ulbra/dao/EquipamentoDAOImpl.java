@@ -132,4 +132,23 @@ public class EquipamentoDAOImpl implements EquipamentoDAO {
 
         return false;
     }
+
+    public List<Equipamento> listarTodos() {
+        String sql = "Select id_equipamento ,tag_patrimonio From equipamentos ORDER BY tag_patrimonio";
+        List<Equipamento> lista = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Equipamento e = new Equipamento();
+                e.setId_equipamento(rs.getInt("id_equipamento"));
+                e.setTag_patrimonio(rs.getString("tag_patrimonio"));
+                lista.add(e);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return lista;
+    }
+
 }

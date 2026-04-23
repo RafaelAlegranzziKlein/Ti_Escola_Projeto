@@ -8,24 +8,32 @@ import br.ulbra.model.Usuario;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import org.mindrot.jbcrypt.BCrypt;
+
 
 public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public void salvar(Usuario usuario) {
-        String sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
+              String sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
 
         try (Connection conn = ConnectionFactory.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getEmail());
-            stmt.setString(3, usuario.getSenha());
+
+            // CRIPTOGRAFIA AQUI: 
+            // O gensalt() gera o tempero aleatório e o hashpw gera a senha segura
+            String senhaCriptografada = BCrypt.hashpw(usuario.getSenha(), BCrypt.gensalt());
+            stmt.setString(3, senhaCriptografada);
 
             stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Usuário cadastrado com segurança!");
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erro ao salvar: " + e.getMessage());
         }
     }
 
@@ -115,4 +123,24 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             throw new RuntimeException(c);
         }
     }
+
+
+    public List<Usuario> listarTodos() {
+        String sql = "Select id_usuario  ,nome From usuarios ORDER BY nome";
+        List<Usuario> lista = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Usuario u = new Usuario();
+                u.setId_usuario(rs.getInt("id_usuario "));
+                u.setNome(rs.getString("nome"));
+                lista.add(u);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return lista;
+    }
+
 }
