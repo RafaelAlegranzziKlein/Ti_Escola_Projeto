@@ -24,20 +24,23 @@ public class ChamadoView extends javax.swing.JFrame {
     }
 
     public void carregarCombos() {
-        list<Usuario> usuarios = new UsuarioDAOImpl().listarTodos();
-        DefaultComboBoxModel modelUser = new DefaultComboBoxModel();
+
+        List<Usuario> usuarios = new UsuarioDAOImpl().listarTodos();
+        DefaultComboBoxModel<Usuario> modelUser = new DefaultComboBoxModel<>();
+
         for (Usuario u : usuarios) {
             modelUser.addElement(u);
         }
-        cbSolicitante.setModel(modelUser)
-    
-        list<Equipamentos> usuarios = new UsuarioDAOImpl().listarTodos();
-        DefaultComboBoxModel equipamentoModel = new DefaultComboBoxModel();
-        for (Equipamento e : equipamento) {
-            modelUser.addElement(e);
-        }
+        cbSolicitante.setModel(modelUser);
 
-        cbEquipamento.setModel(modelEqui)
+        List<Equipamento> equipamentos = new EquipamentoDAOImpl().listarTodos();
+        DefaultComboBoxModel<Equipamento> modelEquip = new DefaultComboBoxModel<>();
+
+        for (Equipamento e : equipamentos) {
+            modelEquip.addElement(e);
+        }
+        cbEquipamento.setModel(modelEquip);
+    }
 
     public void listarTabela() {
         DefaultTableModel model = (DefaultTableModel) tblChamado.getModel();
@@ -97,15 +100,16 @@ public class ChamadoView extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        txtProblemaRelatado = new javax.swing.JTextPane();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextPane2 = new javax.swing.JTextPane();
+        txtDiagnosticoTecnico = new javax.swing.JTextPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblChamado = new javax.swing.JTable();
         btnEditar = new javax.swing.JButton();
         btnExcliur = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
 
         popupMenu1.setLabel("popupMenu1");
 
@@ -279,7 +283,7 @@ public class ChamadoView extends javax.swing.JFrame {
                         .addGap(41, 41, 41)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 254, Short.MAX_VALUE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,13 +322,13 @@ public class ChamadoView extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(57, 48, 83));
 
-        jLabel7.setText("jLabel7");
+        jLabel7.setText("Relato do Problema");
 
-        jLabel8.setText("jLabel8");
+        jLabel8.setText("Diagnóstico Técnico");
 
-        jScrollPane2.setViewportView(jTextPane1);
+        jScrollPane2.setViewportView(txtProblemaRelatado);
 
-        jScrollPane3.setViewportView(jTextPane2);
+        jScrollPane3.setViewportView(txtDiagnosticoTecnico);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -349,7 +353,7 @@ public class ChamadoView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
         );
 
@@ -399,6 +403,13 @@ public class ChamadoView extends javax.swing.JFrame {
             }
         });
 
+        btnVoltar.setText("x");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -408,7 +419,7 @@ public class ChamadoView extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(20, 20, 20))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
@@ -416,7 +427,7 @@ public class ChamadoView extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                                 .addGap(111, 111, 111)
                                 .addComponent(btnSalvar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 245, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
                                 .addComponent(btnLimpar)
                                 .addGap(199, 199, 199)
                                 .addComponent(btnExcliur)
@@ -425,14 +436,20 @@ public class ChamadoView extends javax.swing.JFrame {
                                 .addGap(154, 154, 154))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addContainerGap())))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(btnVoltar)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addComponent(btnVoltar)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditar)
@@ -441,7 +458,7 @@ public class ChamadoView extends javax.swing.JFrame {
                     .addComponent(btnSalvar))
                 .addGap(33, 33, 33)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52))
+                .addGap(40, 40, 40))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -482,16 +499,21 @@ public class ChamadoView extends javax.swing.JFrame {
     br.ulbra.controller.ChamadoController controller = new br.ulbra.controller.ChamadoController();
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
-        String mensagem = controller.cadastrar(
-                txtSolicitante.getText(),
-                txtSala.getText(),
-                txtEquipamentoTag.getText(),
-                txtProblema.getText(),
+        Usuario u = (Usuario) cbSolicitante.getSelectedItem();
+        Equipamento e = (Equipamento) cbEquipamento.getSelectedItem();
+
+        String msg = controller.cadastrar(
+                u.getId_usuario(),
+                e.getId_equipamento(),
+                txtProblemaRelatado.getText(),
                 txtDiagnosticoTecnico.getText(),
                 jcbPrioridade.getSelectedItem().toString(),
-                jcbStatus.getSelectedItem().toString(),
-                txtDataAbertura.getText()
+                "Pendente",
+                dateChooserCombo1.getText()
         );
+
+        JOptionPane.showMessageDialog(null, msg);
+        listarTabela();
 
         javax.swing.JOptionPane.showMessageDialog(null, mensagem);
         listarTabela();
@@ -568,6 +590,11 @@ public class ChamadoView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        this.dispose(); // fecha a tela de login
+        new DashBoardView().setVisible(true); // abre a próxima tel
+    }//GEN-LAST:event_btnVoltarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -617,6 +644,7 @@ public class ChamadoView extends javax.swing.JFrame {
     private javax.swing.JButton btnExcliur;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnVoltar;
     private datechooser.beans.DateChooserCombo dateChooserCombo1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
@@ -639,11 +667,11 @@ public class ChamadoView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JTextPane jTextPane2;
     private javax.swing.JComboBox<String> jcbPrioridade;
     private java.awt.PopupMenu popupMenu1;
     private javax.swing.JTable tblChamado;
+    private javax.swing.JTextPane txtDiagnosticoTecnico;
     private javax.swing.JTextField txtId;
+    private javax.swing.JTextPane txtProblemaRelatado;
     // End of variables declaration//GEN-END:variables
 }

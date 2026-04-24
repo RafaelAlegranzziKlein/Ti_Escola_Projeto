@@ -18,21 +18,24 @@ public class ChamadoController {
         this.service = new ChamadoService(new ChamadoDAOImpl());
     }
 
-    public String cadastrar(String solicitante, String sala, String equipamento_tag, String problema_relatado,
-            String diagnostico_tecnico, String prioridade, String status, String data_abertura) {
-        try {
-            Chamado chamado_tecnico = new Chamado();
-            chamado_tecnico.setSolicitante(solicitante);
-            chamado_tecnico.setSala(sala);
-            chamado_tecnico.setEquipamento_tag(equipamento_tag);
-            chamado_tecnico.setProblema_relatado(problema_relatado);
-            chamado_tecnico.setDiagnostico_tecnico(diagnostico_tecnico);
-            chamado_tecnico.setPrioridade(prioridade);
-            chamado_tecnico.setStatus(status);
-            chamado_tecnico.setData_abertura(data_abertura);
+    public String cadastrar(int idUsuario, int idEquipamento,
+            String problema, String diagnostico,
+            String prioridade, String status, String data_abertura) {
 
-            service.cadastrar(chamado_tecnico);
-            return "Chamado tecnico feito com sucesso";
+        try {
+            Chamado c = new Chamado();
+
+            c.setId_usuario(idUsuario);
+            c.setId_equipamento(idEquipamento);
+            c.setProblema_relatado(problema);
+            c.setDiagnostico_tecnico(diagnostico);
+            c.setPrioridade(prioridade);
+            c.setStatus(status);
+            c.setData_abertura(data_abertura);
+
+            service.cadastrar(c);
+
+            return "Chamado criado com sucesso";
 
         } catch (Exception e) {
             return "Erro: " + e.getMessage();

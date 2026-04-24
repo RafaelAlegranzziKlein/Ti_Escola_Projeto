@@ -14,6 +14,25 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
 
+    
+    public List<Usuario> listarTodos() {
+        String sql = "Select id_usuario  ,nome From usuarios ORDER BY nome";
+        List<Usuario> lista = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Usuario u = new Usuario();
+                u.setId_usuario(rs.getInt("id_usuario"));
+                u.setNome(rs.getString("nome"));
+                lista.add(u);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return lista;
+    }
+    
     @Override
     public void salvar(Usuario usuario) {
               String sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
@@ -36,7 +55,40 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             throw new RuntimeException("Erro ao salvar: " + e.getMessage());
         }
     }
- 
+    
+      /**
+     * Método para validação de Login
+     */
+    public Usuario logar(String email, String senhaDigitada) {
+        // Buscamos apenas pelo e-mail, pois não podemos comparar o hash no SQL
+        String sql = "SELECT * FROM usuarios WHERE email = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String senhaBanco = rs.getString("senha");
+
+                    // COMPARAÇÃO SEGURA:
+                    // O BCrypt verifica se a senha digitada bate com o hash salvo
+                    if (BCrypt.checkpw(senhaDigitada, senhaBanco)) {
+                        Usuario u = new Usuario();
+                        u.setId_usuario(rs.getInt("id_usuario"));
+                        u.setNome(rs.getString("nome"));
+                        u.setEmail(rs.getString("email"));
+                        return u;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro no login: " + e.getMessage());
+        }
+        return null; // Login falhou
+    }
+
 
     @Override
     public List<Usuario> listar() {
@@ -126,22 +178,5 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     }
 
 
-    public List<Usuario> listarTodos() {
-        String sql = "Select id_usuario  ,nome From usuarios ORDER BY nome";
-        List<Usuario> lista = new ArrayList<>();
-        try (Connection conn = ConnectionFactory.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                Usuario u = new Usuario();
-                u.setId_usuario(rs.getInt("id_usuario "));
-                u.setNome(rs.getString("nome"));
-                lista.add(u);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return lista;
-    }
 
 }

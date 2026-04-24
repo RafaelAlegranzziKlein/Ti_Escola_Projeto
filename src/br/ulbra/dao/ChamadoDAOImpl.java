@@ -14,21 +14,20 @@ public class ChamadoDAOImpl implements ChamadoDAO {
 
     @Override
     public void salvar(Chamado chamado_tecnico) {
-        String sql = "INSERT INTO chamado_tecnico (solicitante, sala , equipamento_tag , problema_relatado, "
-                + "diagnostico_tecnico , prioridade , status, data_abertura) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO chamado_tecnico "
+                + "(id_usuario, id_equipamento, problema_relatado, diagnostico_tecnico, "
+                + "prioridade, status, data_abertura) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-       try (Connection conn = ConnectionFactory.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-
-            stmt.setString(1, chamado_tecnico.getSolicitante());
-            stmt.setString(2, chamado_tecnico.getSala());
-            stmt.setString(3, chamado_tecnico.getEquipamento_tag());
-            stmt.setString(4, chamado_tecnico.getProblema_relatado());
-            stmt.setString(5, chamado_tecnico.getDiagnostico_tecnico());
-            stmt.setString(6, chamado_tecnico.getPrioridade());
-            stmt.setString(7, chamado_tecnico.getStatus());
-            stmt.setString(8, chamado_tecnico.getData_abertura());
+            stmt.setInt(1, chamado_tecnico.getId_usuario());
+            stmt.setInt(2, chamado_tecnico.getId_equipamento());
+            stmt.setString(3, chamado_tecnico.getProblema_relatado());
+            stmt.setString(4, chamado_tecnico.getDiagnostico_tecnico());
+            stmt.setString(5, chamado_tecnico.getPrioridade());
+            stmt.setString(6, chamado_tecnico.getStatus());
+            stmt.setString(7, chamado_tecnico.getData_abertura());  
 
             stmt.executeUpdate();
 
@@ -115,7 +114,7 @@ public class ChamadoDAOImpl implements ChamadoDAO {
             stmt.setString(6, chamado_tecnico.getPrioridade());
             stmt.setString(7, chamado_tecnico.getStatus());
             stmt.setString(8, chamado_tecnico.getData_abertura());
-            stmt.setLong(9, chamado_tecnico.getId()); 
+            stmt.setLong(9, chamado_tecnico.getId());
 
             stmt.executeUpdate();
 
