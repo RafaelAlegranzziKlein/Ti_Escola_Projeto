@@ -4,6 +4,11 @@ import br.ulbra.dao.UsuarioDAOImpl;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.util.List;
+import br.ulbra.model.Usuario;
+import br.ulbra.model.Equipamento;
+import br.ulbra.dao.EquipamentoDAOImpl;
+import br.ulbra.dao.UsuarioDAOImpl;
 
 /**
  *
@@ -52,9 +57,8 @@ public class ChamadoView extends javax.swing.JFrame {
             for (br.ulbra.model.Chamado c : lista) {
                 model.addRow(new Object[]{
                     c.getId(),
-                    c.getSolicitante(),
-                    c.getSala(),
-                    c.getEquipamento_tag(),
+                    c.getId_usuario(),
+                    c.getId_equipamento(),
                     c.getProblema_relatado(),
                     c.getDiagnostico_tecnico(),
                     c.getPrioridade(),
@@ -88,7 +92,7 @@ public class ChamadoView extends javax.swing.JFrame {
         jcbPrioridade = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
-        dateChooserCombo1 = new datechooser.beans.DateChooserCombo();
+        data = new datechooser.beans.DateChooserCombo();
         jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         txtId = new javax.swing.JTextField();
@@ -166,7 +170,7 @@ public class ChamadoView extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
                 .addComponent(jcbPrioridade, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -183,7 +187,7 @@ public class ChamadoView extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(68, 60, 104));
 
-        dateChooserCombo1.setCalendarBackground(new java.awt.Color(99, 89, 133));
+        data.setCalendarBackground(new java.awt.Color(99, 89, 133));
 
         jLabel6.setBackground(new java.awt.Color(68, 60, 104));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -195,7 +199,7 @@ public class ChamadoView extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(93, 93, 93)
-                .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(data, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
@@ -205,7 +209,7 @@ public class ChamadoView extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(dateChooserCombo1, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+            .addComponent(data, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addContainerGap()
@@ -283,7 +287,7 @@ public class ChamadoView extends javax.swing.JFrame {
                         .addGap(41, 41, 41)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 254, Short.MAX_VALUE))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 258, Short.MAX_VALUE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -486,8 +490,8 @@ public class ChamadoView extends javax.swing.JFrame {
     private void tblChamadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChamadoMouseClicked
         int linha = tblChamado.getSelectedRow();
         txtId.setText(tblChamado.getValueAt(linha, 0).toString());
-        txtSolicitante.setText(tblChamado.getValueAt(linha, 1).toString());
-        txtSala.setText(tblChamado.getValueAt(linha, 2).toString());
+        cbSolicitante.setText(tblChamado.getValueAt(linha, 1).toString());
+        cbSolicitante.setText(tblChamado.getValueAt(linha, 2).toString());
         txtEquipamentoTag.setText(tblChamado.getValueAt(linha, 3).toString());
         txtProblema.setText(tblChamado.getValueAt(linha, 4).toString());
         txtDiagnosticoTecnico.setText(tblChamado.getValueAt(linha, 5).toString());
@@ -509,7 +513,7 @@ public class ChamadoView extends javax.swing.JFrame {
                 txtDiagnosticoTecnico.getText(),
                 jcbPrioridade.getSelectedItem().toString(),
                 "Pendente",
-                dateChooserCombo1.getText()
+                data.getText()
         );
 
         JOptionPane.showMessageDialog(null, msg);
@@ -645,7 +649,7 @@ public class ChamadoView extends javax.swing.JFrame {
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVoltar;
-    private datechooser.beans.DateChooserCombo dateChooserCombo1;
+    private datechooser.beans.DateChooserCombo data;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;

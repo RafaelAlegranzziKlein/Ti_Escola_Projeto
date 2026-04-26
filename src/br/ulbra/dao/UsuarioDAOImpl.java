@@ -11,10 +11,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import org.mindrot.jbcrypt.BCrypt;
 
-
 public class UsuarioDAOImpl implements UsuarioDAO {
 
-    
     public List<Usuario> listarTodos() {
         String sql = "Select id_usuario  ,nome From usuarios ORDER BY nome";
         List<Usuario> lista = new ArrayList<>();
@@ -32,10 +30,10 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         }
         return lista;
     }
-    
+
     @Override
     public void salvar(Usuario usuario) {
-              String sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
 
         try (Connection conn = ConnectionFactory.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -49,14 +47,13 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             stmt.setString(3, senhaCriptografada);
 
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Usuário cadastrado com segurança!");
 
         } catch (Exception e) {
             throw new RuntimeException("Erro ao salvar: " + e.getMessage());
         }
     }
-    
-      /**
+
+    /**
      * Método para validação de Login
      */
     public Usuario logar(String email, String senhaDigitada) {
@@ -88,7 +85,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         }
         return null; // Login falhou
     }
-
 
     @Override
     public List<Usuario> listar() {
@@ -124,7 +120,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         try (Connection conn = ConnectionFactory.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setLong(1, id_usuario);
+            stmt.setInt(1, id_usuario);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
@@ -152,7 +148,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getEmail());
-            stmt.setString(3, usuario.getSenha());
+            String senhaCriptografada = BCrypt.hashpw(usuario.getSenha(), BCrypt.gensalt());
+            stmt.setString(3, senhaCriptografada);
             stmt.setInt(4, usuario.getId_usuario());
 
             stmt.executeUpdate();
@@ -176,7 +173,5 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             throw new RuntimeException(c);
         }
     }
-
-
 
 }

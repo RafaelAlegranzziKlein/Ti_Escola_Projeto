@@ -27,7 +27,7 @@ public class ChamadoDAOImpl implements ChamadoDAO {
             stmt.setString(4, chamado_tecnico.getDiagnostico_tecnico());
             stmt.setString(5, chamado_tecnico.getPrioridade());
             stmt.setString(6, chamado_tecnico.getStatus());
-            stmt.setString(7, chamado_tecnico.getData_abertura());  
+            stmt.setString(7, chamado_tecnico.getData_abertura());
 
             stmt.executeUpdate();
 
@@ -48,15 +48,15 @@ public class ChamadoDAOImpl implements ChamadoDAO {
             while (rs.next()) {
                 Chamado c = new Chamado(
                         rs.getLong("id"),
-                        rs.getString("solicitante"),
-                        rs.getString("sala"),
-                        rs.getString("equipamento_tag"),
+                        rs.getInt("id_usuario"),
+                        rs.getInt("id_equipamento"),
                         rs.getString("problema_relatado"),
                         rs.getString("diagnostico_tecnico"),
                         rs.getString("prioridade"),
                         rs.getString("status"),
                         rs.getString("data_abertura")
                 );
+
                 lista.add(c);
             }
 
@@ -80,9 +80,8 @@ public class ChamadoDAOImpl implements ChamadoDAO {
             if (rs.next()) {
                 return new Chamado(
                         rs.getLong("id"),
-                        rs.getString("solicitante"),
-                        rs.getString("sala"),
-                        rs.getString("equipamento_tag"),
+                        rs.getInt("id_usuario"),
+                        rs.getInt("id_equipamento"),
                         rs.getString("problema_relatado"),
                         rs.getString("diagnostico_tecnico"),
                         rs.getString("prioridade"),
@@ -100,22 +99,22 @@ public class ChamadoDAOImpl implements ChamadoDAO {
 
     @Override
     public void atualizar(Chamado chamado_tecnico) {
-        String sql = "UPDATE chamado_tecnico SET solicitante = ?, sala = ?, equipamento_tag = ?, "
-                + "problema_relatado = ?, diagnostico_tecnico = ?, prioridade = ?, status = ?, data_abertura = ? WHERE id = ?";
+        String sql = "UPDATE chamado_tecnico SET =id_usuario = ?, id_equipamento = ?,"
+                + "problema_relatado = ?, diagnostico_tecnico = ?, prioridade = ?,"
+                + "data_abertura = ?  WHERE id = ?";
 
-        try (Connection conn = ConnectionFactory.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, chamado_tecnico.getSolicitante());
-            stmt.setString(2, chamado_tecnico.getSala());
-            stmt.setString(3, chamado_tecnico.getEquipamento_tag());
-            stmt.setString(4, chamado_tecnico.getProblema_relatado());
-            stmt.setString(5, chamado_tecnico.getDiagnostico_tecnico());
-            stmt.setString(6, chamado_tecnico.getPrioridade());
-            stmt.setString(7, chamado_tecnico.getStatus());
-            stmt.setString(8, chamado_tecnico.getData_abertura());
-            stmt.setLong(9, chamado_tecnico.getId());
-
+        try (Connection conn = ConnectionFactory.getConnection();   
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, chamado_tecnico.getId_usuario());
+            stmt.setInt(2, chamado_tecnico.getId_equipamento());
+            stmt.setString(3, chamado_tecnico.getProblema_relatado());
+            stmt.setString(4, chamado_tecnico.getDiagnostico_tecnico());
+            stmt.setString(5, chamado_tecnico.getPrioridade());
+            stmt.setString(6, chamado_tecnico.getStatus());
+            stmt.setString(7, chamado_tecnico.getData_abertura());
+            stmt.setLong(8, chamado_tecnico.getId());
+            
             stmt.executeUpdate();
 
         } catch (Exception c) {

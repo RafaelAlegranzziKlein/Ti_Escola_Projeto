@@ -36,7 +36,7 @@ public class UsuarioView extends javax.swing.JFrame {
                     u.getId_usuario(),
                     u.getNome(),
                     u.getEmail(),
-                    u.getSenha()
+                    "******"
                 });
             }
         } else {
@@ -286,7 +286,7 @@ public class UsuarioView extends javax.swing.JFrame {
         txtID.setText(tblUsuario.getValueAt(linha, 0).toString());
         txtNome.setText(tblUsuario.getValueAt(linha, 1).toString());
         txtEmail.setText(tblUsuario.getValueAt(linha, 2).toString());
-        txtSenha.setText(tblUsuario.getValueAt(linha, 3).toString());
+        txtSenha.setText("");
     }//GEN-LAST:event_tblUsuarioMouseClicked
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed

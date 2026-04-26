@@ -18,8 +18,12 @@ public class ChamadoService {
 
     public void cadastrar(Chamado chamado_tecnico) {
 
-        if (chamado_tecnico.getSolicitante() == null || chamado_tecnico.getSolicitante().isEmpty()) {
-            throw new RuntimeException("Solicitante é obrigatorio");
+        if (chamado_tecnico.getId_usuario() <= 0) {
+            throw new RuntimeException("Usuário é obrigatório");
+        }
+
+        if (chamado_tecnico.getId_equipamento() <= 0) {
+            throw new RuntimeException("Equipamento é obrigatório");
         }
 
         if (chamado_tecnico.getProblema_relatado() == null || chamado_tecnico.getProblema_relatado().isEmpty()) {
@@ -55,12 +59,16 @@ public class ChamadoService {
 
     public void atualizar(Chamado chamado_tecnico) {
 
-        if (chamado_tecnico.getId() == null) {
+        if (chamado_tecnico.getId() <= 0) {
             throw new RuntimeException("ID obrigatório para atualizar");
         }
 
-        if (chamado_tecnico.getSolicitante() == null || chamado_tecnico.getSolicitante().isEmpty()) {
-            throw new RuntimeException("Solicitante é obrigatório");
+        if (chamado_tecnico.getId_usuario() <= 0) {
+            throw new RuntimeException("Usuário é obrigatório");
+        }
+
+        if (chamado_tecnico.getId_equipamento() <= 0) {
+            throw new RuntimeException("Equipamento é obrigatório");
         }
 
         if (chamado_tecnico.getProblema_relatado() == null || chamado_tecnico.getProblema_relatado().isEmpty()) {

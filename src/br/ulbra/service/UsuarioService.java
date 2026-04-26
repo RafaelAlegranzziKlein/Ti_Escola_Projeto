@@ -57,6 +57,9 @@ public class UsuarioService {
         }
 
         dao.atualizar(usuario);
+        if (usuario.getSenha() == null || usuario.getSenha().isEmpty()) {
+            throw new RuntimeException("Senha é obrigatoria !!!");
+        }
     }
 
     public void deletar(int id_usuario) {

@@ -22,7 +22,9 @@ public class ConnectionFactory {
             InputStream input = ConnectionFactory.class
                     .getClassLoader()
                     .getResourceAsStream("db.properties");
-
+            if (input == null) {
+                throw new RuntimeException("Arquivo db.properties NÃO encontrado no classpath");
+            }
             props.load(input);
 
             url = props.getProperty("db.url");
@@ -42,5 +44,3 @@ public class ConnectionFactory {
         }
     }
 }
-
-

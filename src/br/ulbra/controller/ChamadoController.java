@@ -46,22 +46,25 @@ public class ChamadoController {
         return service.listar();
     }
 
-    public String atualizar(Long id, String solicitante, String sala, String equipamento_tag, String problema_relatado,
-            String diagnostico_tecnico, String prioridade, String status, String data_abertura) {
+    public String atualizar(Long id, int idUsuario, int idEquipamento,
+            String problema_relatado,
+            String diagnostico_tecnico,
+            String prioridade,
+            String status,
+            String data_abertura) {
+
         try {
+            Chamado c = new Chamado();
+            c.setId(id);
+            c.setId_usuario(idUsuario);
+            c.setId_equipamento(idEquipamento);
+            c.setProblema_relatado(problema_relatado);
+            c.setDiagnostico_tecnico(diagnostico_tecnico);
+            c.setPrioridade(prioridade);
+            c.setStatus(status);
+            c.setData_abertura(data_abertura);
 
-            Chamado chamado_tecnico = new Chamado();
-            chamado_tecnico.setId(id);
-            chamado_tecnico.setSolicitante(solicitante);
-            chamado_tecnico.setSala(sala);
-            chamado_tecnico.setEquipamento_tag(equipamento_tag);
-            chamado_tecnico.setProblema_relatado(problema_relatado);
-            chamado_tecnico.setDiagnostico_tecnico(diagnostico_tecnico);
-            chamado_tecnico.setPrioridade(prioridade);
-            chamado_tecnico.setStatus(status);
-            chamado_tecnico.setData_abertura(data_abertura);
-
-            service.atualizar(chamado_tecnico);
+            service.atualizar(c);
 
             return "Atualizado com sucesso";
 
