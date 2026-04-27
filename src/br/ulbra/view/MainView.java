@@ -94,6 +94,11 @@ public class MainView extends javax.swing.JFrame {
                 btnEntrarActionPerformed(evt);
             }
         });
+        btnEntrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEntrarKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -167,6 +172,10 @@ public class MainView extends javax.swing.JFrame {
     private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSenhaActionPerformed
+
+    private void btnEntrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEntrarKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEntrarKeyPressed
 
     /**
      * @param args the command line arguments

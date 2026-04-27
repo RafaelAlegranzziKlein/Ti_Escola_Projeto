@@ -57,6 +57,11 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JPanel" name="jPanel1">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="85" green="59" red="63" type="rgb"/>
+        </Property>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -66,42 +71,43 @@
                   <Component id="jScrollPane2" min="-2" pref="453" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
               </Group>
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
                           <Component id="btnSalvar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
-                          <Component id="btnLimpar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                          <Component id="btnEditar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="57" max="32767" attributes="0"/>
+                          <EmptySpace pref="50" max="32767" attributes="0"/>
                           <Component id="txtSala" min="-2" pref="293" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
-                          <Component id="btnEditar" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Component id="txtID" min="-2" pref="237" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="btnExcluir" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnLimpar" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Component id="btnVoltar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="240" max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="btnExcluir" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtPatrimonio_tag" min="-2" pref="301" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="btnVoltar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="184" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="190" max="-2" attributes="0"/>
+                          <Component id="txtPatrimonio_tag" min="-2" pref="301" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -120,18 +126,18 @@
                       <Component id="txtID" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtSala" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Component id="txtPatrimonio_tag" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnLimpar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnEditar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnExcluir" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnLimpar" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnEditar" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="jScrollPane2" min="-2" pref="106" max="-2" attributes="0"/>
-                  <EmptySpace pref="18" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -139,11 +145,17 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Equipamento"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="18" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Cadastro de Equipamento"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtPatrimonio_tag">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="68" green="3c" red="44" type="rgb"/>
+            </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="Tag do Patrimonio"/>
@@ -156,6 +168,9 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtSala">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="68" green="3c" red="44" type="rgb"/>
+            </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="Sala"/>
@@ -210,7 +225,9 @@
         </Container>
         <Component class="javax.swing.JButton" name="btnSalvar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Salvar"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/ulbra/img/save.png"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarActionPerformed"/>
@@ -218,7 +235,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnExcluir">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Excluir"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/ulbra/img/delete.png"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirActionPerformed"/>
@@ -226,7 +245,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnLimpar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Limpar"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/ulbra/img/limpar.png"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLimparActionPerformed"/>
@@ -234,7 +255,10 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnEditar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Editar"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/ulbra/img/edit.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarActionPerformed"/>
@@ -242,6 +266,9 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtID">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="68" green="3c" red="44" type="rgb"/>
+            </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="ID"/>
@@ -251,7 +278,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnVoltar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="x"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/ulbra/img/back-button.png"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVoltarActionPerformed"/>

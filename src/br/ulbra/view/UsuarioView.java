@@ -83,36 +83,42 @@ public class UsuarioView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(99, 89, 133));
+
+        txtID.setBackground(new java.awt.Color(68, 60, 104));
         txtID.setBorder(javax.swing.BorderFactory.createTitledBorder("ID"));
 
+        txtSenha.setBackground(new java.awt.Color(68, 60, 104));
         txtSenha.setBorder(javax.swing.BorderFactory.createTitledBorder("Senha"));
 
+        txtNome.setBackground(new java.awt.Color(68, 60, 104));
         txtNome.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome"));
 
+        txtEmail.setBackground(new java.awt.Color(68, 60, 104));
         txtEmail.setBorder(javax.swing.BorderFactory.createTitledBorder("Email"));
 
-        btnSalvar.setText("Salvar");
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/ulbra/img/save.png"))); // NOI18N
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
             }
         });
 
-        btnExcluir.setText("Excluir");
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/ulbra/img/delete.png"))); // NOI18N
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
             }
         });
 
-        btnLimpar.setText("Limpar");
+        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/ulbra/img/limpar.png"))); // NOI18N
         btnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimparActionPerformed(evt);
             }
         });
 
-        btnEditar.setText("Editar");
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/ulbra/img/edit.png"))); // NOI18N
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -137,7 +143,7 @@ public class UsuarioView extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tblUsuario);
 
-        btnVoltar.setText("x");
+        btnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/ulbra/img/back-button.png"))); // NOI18N
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVoltarActionPerformed(evt);
@@ -148,40 +154,40 @@ public class UsuarioView extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(btnSalvar)
-                .addGap(98, 98, 98)
-                .addComponent(btnEditar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLimpar)
-                .addGap(49, 49, 49)
-                .addComponent(btnExcluir)
-                .addGap(75, 75, 75))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(111, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(108, 108, 108))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addComponent(btnVoltar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnVoltar)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                            .addComponent(txtSenha))
-                        .addGap(72, 72, 72)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEmail)
-                            .addComponent(txtNome))
-                        .addGap(47, 47, 47))))
+                            .addComponent(txtSenha)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(btnSalvar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                        .addComponent(btnEditar)))
+                .addGap(72, 72, 72)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnLimpar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnExcluir))
+                    .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNome, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(47, 47, 47))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(12, 12, 12)
                 .addComponent(btnVoltar)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -199,7 +205,7 @@ public class UsuarioView extends javax.swing.JFrame {
                     .addComponent(btnEditar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -290,8 +296,8 @@ public class UsuarioView extends javax.swing.JFrame {
     }//GEN-LAST:event_tblUsuarioMouseClicked
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-   this.dispose(); // fecha a tela de login
-        new DashBoardView().setVisible(true); // abre a próxima tela
+        this.dispose(); // fecha a tela de login
+        new DashBoardView().setVisible(true); // abre a próxima tel
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
