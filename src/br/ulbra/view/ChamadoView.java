@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 import br.ulbra.model.Usuario;
+import br.ulbra.model.Chamado;
 import br.ulbra.model.Equipamento;
 import br.ulbra.dao.EquipamentoDAOImpl;
 import br.ulbra.dao.UsuarioDAOImpl;
@@ -31,7 +32,7 @@ public class ChamadoView extends javax.swing.JFrame {
     public void carregarCombos() {
 
         List<Usuario> usuarios = new UsuarioDAOImpl().listarTodos();
-        DefaultComboBoxModel<Usuario> modelUser = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel modelUser = new DefaultComboBoxModel<>();
 
         for (Usuario u : usuarios) {
             modelUser.addElement(u);
@@ -39,7 +40,7 @@ public class ChamadoView extends javax.swing.JFrame {
         cbSolicitante.setModel(modelUser);
 
         List<Equipamento> equipamentos = new EquipamentoDAOImpl().listarTodos();
-        DefaultComboBoxModel<Equipamento> modelEquip = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel modelEquip = new DefaultComboBoxModel<>();
 
         for (Equipamento e : equipamentos) {
             modelEquip.addElement(e);
@@ -51,23 +52,19 @@ public class ChamadoView extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tblChamado.getModel();
         model.setRowCount(0);
 
-        java.util.List<br.ulbra.model.Chamado> lista = controller.listar();
+        List<Chamado> chamados = controller.listar();
 
-        if (lista != null) {
-            for (br.ulbra.model.Chamado c : lista) {
-                model.addRow(new Object[]{
-                    c.getId(),
-                    c.getId_usuario(),
-                    c.getId_equipamento(),
-                    c.getProblema_relatado(),
-                    c.getDiagnostico_tecnico(),
-                    c.getPrioridade(),
-                    c.getStatus(),
-                    c.getData_abertura()
-                });
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Nenhum chamado encontrado!");
+        for (Chamado c : chamados) {
+            model.addRow(new Object[]{
+                c.getId(),
+                c.getSolicitante().getNome(),
+                c.getEquipamentoTag().getTag_patrimonio(),
+                c.getProblema_relatado(),
+                c.getDiagnostico_tecnico(),
+                c.getPrioridade(),
+                c.getStatus(),
+                c.getData_abertura()
+            });
         }
     }
 
@@ -92,13 +89,13 @@ public class ChamadoView extends javax.swing.JFrame {
         jcbPrioridade = new javax.swing.JComboBox<>();
         cbEquipamento = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
-        data = new datechooser.beans.DateChooserCombo();
+        DataAbertura = new datechooser.beans.DateChooserCombo();
         jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         txtId = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        Ativo = new javax.swing.JCheckBox();
+        CfAtivo = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -170,7 +167,7 @@ public class ChamadoView extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(jcbPrioridade, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -187,7 +184,7 @@ public class ChamadoView extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(68, 60, 104));
 
-        data.setCalendarBackground(new java.awt.Color(99, 89, 133));
+        DataAbertura.setCalendarBackground(new java.awt.Color(99, 89, 133));
 
         jLabel6.setBackground(new java.awt.Color(68, 60, 104));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -199,7 +196,7 @@ public class ChamadoView extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(93, 93, 93)
-                .addComponent(data, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(DataAbertura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
@@ -209,7 +206,7 @@ public class ChamadoView extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(data, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+            .addComponent(DataAbertura, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addContainerGap()
@@ -248,8 +245,13 @@ public class ChamadoView extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(68, 60, 104));
 
-        Ativo.setBackground(new java.awt.Color(68, 60, 104));
-        Ativo.setText("Ativo");
+        CfAtivo.setBackground(new java.awt.Color(68, 60, 104));
+        CfAtivo.setText("Ativo");
+        CfAtivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CfAtivoActionPerformed(evt);
+            }
+        });
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("STATUS");
@@ -261,7 +263,7 @@ public class ChamadoView extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Ativo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(CfAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -270,7 +272,7 @@ public class ChamadoView extends javax.swing.JFrame {
                 .addGap(7, 7, 7)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Ativo, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(CfAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -486,15 +488,15 @@ public class ChamadoView extends javax.swing.JFrame {
     private void tblChamadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChamadoMouseClicked
         int linha = tblChamado.getSelectedRow();
         txtId.setText(tblChamado.getValueAt(linha, 0).toString());
-        cbSolicitante.setText(tblChamado.getValueAt(linha, 1).toString());
-        cbSolicitante.setText(tblChamado.getValueAt(linha, 2).toString());
-        txtEquipamentoTag.setText(tblChamado.getValueAt(linha, 3).toString());
-        txtProblema.setText(tblChamado.getValueAt(linha, 4).toString());
+        String nomeSolicitante = tblChamado.getValueAt(linha, 1).toString();
+        cbSolicitante.setSelectedItem(nomeSolicitante);
+        cbEquipamento.setSelectedItem(tblChamado.getValueAt(linha, 3).toString());
+        txtProblemaRelatado.setText(tblChamado.getValueAt(linha, 4).toString());
         txtDiagnosticoTecnico.setText(tblChamado.getValueAt(linha, 5).toString());
         jcbPrioridade.setSelectedItem(tblChamado.getValueAt(linha, 6).toString());
-        jcbStatus.setSelectedItem(tblChamado.getValueAt(linha, 7).toString());
-        txtDataAbertura.setText(tblChamado.getValueAt(linha, 8).toString());
-
+        boolean ativo = tblChamado.getValueAt(linha, 7).toString().equalsIgnoreCase("Ativo");
+        CfAtivo.setSelected(ativo);
+        DataAbertura.setText(tblChamado.getValueAt(linha, 8).toString());
     }//GEN-LAST:event_tblChamadoMouseClicked
     br.ulbra.controller.ChamadoController controller = new br.ulbra.controller.ChamadoController();
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -509,28 +511,22 @@ public class ChamadoView extends javax.swing.JFrame {
                 txtDiagnosticoTecnico.getText(),
                 jcbPrioridade.getSelectedItem().toString(),
                 "Pendente",
-                data.getText()
+                CfAtivo.getActionCommand(),
+                DataAbertura.getText()
         );
 
         JOptionPane.showMessageDialog(null, msg);
-        listarTabela();
-
-        javax.swing.JOptionPane.showMessageDialog(null, mensagem);
         listarTabela();
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         txtId.setText(null);
-        txtSolicitante.setText(null);
-        txtSala.setText(null);
-        txtEquipamentoTag.setText(null);
-        txtProblema.setText(null);
+        txtProblemaRelatado.setText(null);
         txtDiagnosticoTecnico.setText(null);
         jcbPrioridade.setName(null);
-        jcbStatus.setSelectedItem("Pendente");
+        CfAtivo.setSelected(false);
         jcbPrioridade.setSelectedItem("Media");
-        txtDataAbertura.setText("");
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnExcliurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcliurActionPerformed
@@ -541,7 +537,7 @@ public class ChamadoView extends javax.swing.JFrame {
 
         int confirm = JOptionPane.showConfirmDialog(
                 null,
-                "Deseja excluir o Problema relatado " + txtProblema.getText() + " ? ",
+                "Deseja excluir o Problema relatado " + txtProblemaRelatado.getText() + " ? ",
                 "Exclusão",
                 JOptionPane.YES_NO_OPTION
         );
@@ -595,6 +591,10 @@ public class ChamadoView extends javax.swing.JFrame {
         new DashBoardView().setVisible(true); // abre a próxima tel
     }//GEN-LAST:event_btnVoltarActionPerformed
 
+    private void CfAtivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CfAtivoActionPerformed
+
+    }//GEN-LAST:event_CfAtivoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -639,7 +639,8 @@ public class ChamadoView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox Ativo;
+    private javax.swing.JCheckBox CfAtivo;
+    private datechooser.beans.DateChooserCombo DataAbertura;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcliur;
     private javax.swing.JButton btnLimpar;
@@ -647,7 +648,6 @@ public class ChamadoView extends javax.swing.JFrame {
     private javax.swing.JButton btnVoltar;
     private javax.swing.JComboBox<String> cbEquipamento;
     private javax.swing.JComboBox<String> cbSolicitante;
-    private datechooser.beans.DateChooserCombo data;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

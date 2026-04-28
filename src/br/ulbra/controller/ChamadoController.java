@@ -81,4 +81,8 @@ public class ChamadoController {
             return "Erro: " + e.getMessage();
         }
     }
+
+    public String cadastrar(int id_usuario, int id_equipamento, String text, String text0, String toString, String pendente, String status, String text1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

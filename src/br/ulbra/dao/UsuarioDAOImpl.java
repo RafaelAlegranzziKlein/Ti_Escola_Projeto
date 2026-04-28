@@ -5,7 +5,9 @@ package br.ulbra.dao;
  * @author Rafael Alegranzzi klein
  */
 import br.ulbra.model.Usuario;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -13,26 +15,9 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
 
-    public List<Usuario> listarTodos() {
-        String sql = "Select id_usuario  ,nome From usuarios ORDER BY nome";
-        List<Usuario> lista = new ArrayList<>();
-        try (Connection conn = ConnectionFactory.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                Usuario u = new Usuario();
-                u.setId_usuario(rs.getInt("id_usuario"));
-                u.setNome(rs.getString("nome"));
-                lista.add(u);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return lista;
-    }
-
     @Override
     public void salvar(Usuario usuario) {
+        // SQL permanece o mesmo
         String sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
 
         try (Connection conn = ConnectionFactory.getConnection();
@@ -41,15 +26,111 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getEmail());
 
-            // CRIPTOGRAFIA AQUI: 
+            // CRIPTOGRAFIA AQUI:
             // O gensalt() gera o tempero aleatório e o hashpw gera a senha segura
             String senhaCriptografada = BCrypt.hashpw(usuario.getSenha(), BCrypt.gensalt());
             stmt.setString(3, senhaCriptografada);
 
             stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Usuário cadastrado com segurança!");
 
         } catch (Exception e) {
             throw new RuntimeException("Erro ao salvar: " + e.getMessage());
+        }
+    }
+
+    public List<Usuario> listarTodos() {
+
+        String sql = "SELECT id_usuario, nome FROM usuarios ORDER BY nome";
+
+        List<Usuario> lista = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+
+                Usuario u = new Usuario();
+
+                u.setId_usuario(rs.getInt("id_usuario"));
+
+                u.setNome(rs.getString("nome"));
+
+                lista.add(u);
+
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return lista;
+
+    }
+
+    @Override
+    public Usuario buscarPorId(int id) {
+        String sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Usuario u = new Usuario();
+                    u.setId_usuario(rs.getInt("id_usuario"));
+                    u.setNome(rs.getString("nome"));
+                    u.setEmail(rs.getString("email"));
+                    u.setSenha(rs.getString("senha"));
+                    return u;
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar usuário: " + e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public void atualizar(Usuario usuario) {
+        // SQL que atualiza a senha também
+        String sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ? WHERE id_usuario = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, usuario.getNome());
+            stmt.setString(2, usuario.getEmail());
+
+            // IMPORTANTE: Criptografar a nova senha antes de atualizar!
+            String senhaCriptografada = BCrypt.hashpw(usuario.getSenha(), BCrypt.gensalt());
+            stmt.setString(3, senhaCriptografada);
+
+            stmt.setInt(4, usuario.getId_usuario());
+
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deletar(int id) {
+        String sql = "DELETE FROM usuarios WHERE id_usuario = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Usuário removido!");
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao deletar usuário: " + e.getMessage());
         }
     }
 
@@ -88,90 +169,24 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public List<Usuario> listar() {
-        String sql = "SELECT * FROM usuarios";
+        String sql = "SELECT * FROM usuarios ORDER BY nome";
         List<Usuario> lista = new ArrayList<>();
 
         try (Connection conn = ConnectionFactory.getConnection();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                Usuario u = new Usuario(
-                        rs.getInt("id_usuario"),
-                        rs.getString("nome"),
-                        rs.getString("email"),
-                        rs.getString("senha")
-                );
+                Usuario u = new Usuario();
+                u.setId_usuario(rs.getInt("id_usuario"));
+                u.setNome(rs.getString("nome"));
+                u.setEmail(rs.getString("email"));
+                u.setSenha(rs.getString("senha"));
                 lista.add(u);
             }
-
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erro ao listar usuários: " + e.getMessage());
         }
-
         return lista;
-
     }
-
-    @Override
-    public Usuario buscarPorId(int id_usuario) {
-        String sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
-
-        try (Connection conn = ConnectionFactory.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, id_usuario);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                return new Usuario(
-                        rs.getInt("id_usuario"),
-                        rs.getString("nome"),
-                        rs.getString("email"),
-                        rs.getString("senha")
-                );
-            }
-
-        } catch (Exception c) {
-            throw new RuntimeException(c);
-        }
-
-        return null;
-    }
-
-    @Override
-    public void atualizar(Usuario usuario) {
-        String sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ? WHERE id_usuario = ?";
-
-        try (Connection conn = ConnectionFactory.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, usuario.getNome());
-            stmt.setString(2, usuario.getEmail());
-            String senhaCriptografada = BCrypt.hashpw(usuario.getSenha(), BCrypt.gensalt());
-            stmt.setString(3, senhaCriptografada);
-            stmt.setInt(4, usuario.getId_usuario());
-
-            stmt.executeUpdate();
-
-        } catch (Exception c) {
-            throw new RuntimeException(c);
-        }
-    }
-
-    @Override
-    public void deletar(int id_usuario) {
-        String sql = "DELETE FROM usuarios WHERE id_usuario = ?";
-
-        try (Connection conn = ConnectionFactory.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, id_usuario);
-            stmt.executeUpdate();
-
-        } catch (Exception c) {
-            throw new RuntimeException(c);
-        }
-    }
-
 }
